@@ -1,12 +1,15 @@
 ---
-
+// Astro rewrites bundled imports, but NOT plain href/src string literals - they
+// would resolve against the host root and 404 behind the proxy prefix. Join by
+// hand; Astro's BASE_URL may or may not carry a trailing slash.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+		<link rel="icon" href={`${base}/favicon.ico`} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
